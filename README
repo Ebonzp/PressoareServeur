@@ -1,0 +1,30 @@
+This software implements a proprietary protocol (owned by Pressoare Inc ©).
+This protocol is used by Pressoare Inc for the treatment of their B2B transactions.
+
+# Dependencies (for Debian)
+
+We need multi-arch support:
+
+dpkg --add-architecture i386
+
+apt install build-essential autoconf-archive libssl-dev libssl-dev:i386
+
+# Compilation 
+To compile this software:
+
+aclocal
+autoconf
+automake -a -c
+./configure --prefix=/usr/local
+make
+make install
+
+# Cleanup
+
+git clean -f -d -x
+
+# Distribution
+
+git clean -f -d -x
+VERSION=$( cat configure.ac  | grep AC_INIT | cut -d "," -f 2 | sed -e "s/^[ ]*\(.*\)[ ]*$/\1/" )
+tar --transform 's+^.+pressoare-b2b-server-${VERSION}+' --exclude=pressoare-b2b-server-${VERSION}.tar.bz2 -jcvf pressoare-b2b-server-${VERSION}.tar.bz2 . 
